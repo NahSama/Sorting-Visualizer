@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import './SortingVisualizer.css';
 import { getMergeSortAnimation } from '../SortingAlgorithms/MergeSort';
+import { getQuickSortAnimation } from '../SortingAlgorithms/QuickSort';
 
 // Change this value for the speed of the animations.
 // const ANIMATION_SPEED_MS = 1;
@@ -20,7 +21,7 @@ export default class Sortingvisualizer extends Component {
     
         this.state = {
             speed: 1,
-            inputQty: 200,
+            inputQty: 50,
             array: [],
         };
     }
@@ -70,8 +71,35 @@ export default class Sortingvisualizer extends Component {
         }
     }
 
+    quickSort(){
+        const animationSpeedMs = this.state.speed;
+        const animations = getQuickSortAnimation(this.state.array);
+        for(let i = 0; i < animations.length; i++){
+            const arrayBars = document.getElementsByClassName("array-bar");
+            const isSwap = animations[i][0];
+            if(isSwap === 0 ){
+                const [action, barOneIdx, barTwoIdx] = animations[i];
+                const barOneStyle = arrayBars[barOneIdx].style;
+                const barTwoStyle = arrayBars[barTwoIdx].style;
+                const color = i % 2 === 0 ? SECONDARY_COLOR : PRIMARY_COLOR;
+                setTimeout(() => {
+                    barOneStyle.backgroundColor = color;
+                    barTwoStyle.backgroundColor = color;
+                }, i*animationSpeedMs);
+            }else {
+                setTimeout(() => {
+                    const [action, barOneIdx, newHeight] = animations[i];
+                    const barOneStyle = arrayBars[barOneIdx].style;
+                    barOneStyle.height = `${newHeight}px`;
+                }, i*animationSpeedMs);
+            }
+            
+        }
+    }
+
     render() {
         const {array} = this.state
+        getQuickSortAnimation(this.state.array)
         return (
             <div>
                 <div className="navbar navbar-expand-lg navbar-light bg-light">
@@ -94,7 +122,8 @@ export default class Sortingvisualizer extends Component {
                         <label>{this.state.speed}</label> 
                     </div>
                     <button className="btn btn-success form-control" onClick={() => this.resetArray()}>Generate New Array</button>
-                    <button className="btn btn-success form-control" onClick={() => this.mergeSort()}>Merge Sort</button>
+                    <button className="btn btn-danger form-control" onClick={() => this.mergeSort()}>Merge Sort</button>
+                    <button className="btn btn-primary form-control" onClick={() => this.quickSort()}>Quick Sort</button>
                 </div>
                 <div className="array-container">
                     {array.map((value, index) => (
