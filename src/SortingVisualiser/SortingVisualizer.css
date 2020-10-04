@@ -1,0 +1,16 @@
+.array-container {
+    /* display: block;
+    margin: 0 100px;
+    top: 100px; */
+}
+  
+.array-bar {
+    width: 2px;
+    display: inline-block;
+    margin: 0 1px;
+}
+
+.setting-bar {
+    display: flex;
+    margin: 0 100px;
+}
