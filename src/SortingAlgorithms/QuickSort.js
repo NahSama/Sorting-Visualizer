@@ -4,8 +4,7 @@ export function getQuickSortAnimation(array){
 
     const auxiliaryArray = array.slice();
     QuickSort(auxiliaryArray, animations);
-    console.log(animations)
-    console.log(auxiliaryArray)
+    
     return animations;
 }
 
