@@ -23,6 +23,7 @@ export default class Sortingvisualizer extends Component {
             speed: 1,
             inputQty: 50,
             array: [],
+            toggle: true,
         };
     }
 
@@ -114,10 +115,12 @@ export default class Sortingvisualizer extends Component {
                     barTwoStyle.backgroundColor = color;
                 }, i*animationSpeedMs);
             }else {
+                const color = i % 2 === 0 ? SECONDARY_COLOR : PRIMARY_COLOR;
                 setTimeout(() => {
                     const [action, barOneIdx, newHeight] = animations[i];
                     const barOneStyle = arrayBars[barOneIdx].style;
                     barOneStyle.height = `${newHeight}px`;
+                    barOneStyle.backgroundColor = color;
                 }, i*animationSpeedMs);
             }
             
@@ -126,7 +129,6 @@ export default class Sortingvisualizer extends Component {
 
     render() {
         const {array} = this.state
-        getQuickSortAnimation(this.state.array)
         return (
             <div>
                 <div className="navbar navbar-expand-lg navbar-light bg-light">
@@ -143,7 +145,7 @@ export default class Sortingvisualizer extends Component {
                         <label>Sorting Speed</label>
                         <input type="range"
                         min="1"
-                        max="20"
+                        max="100"
                         defaultValue={this.state.speed}
                         onChange={e => this.handleChangeSpeed(e.target.value)}></input>
                         <label>{this.state.speed}</label> 
@@ -161,6 +163,7 @@ export default class Sortingvisualizer extends Component {
                         style={{
                             backgroundColor: PRIMARY_COLOR,
                             height: `${value}px`,
+                            width: `${Math.floor(800/array.length)}px`,
                         }}></div>
                     ))}
                 </div>
