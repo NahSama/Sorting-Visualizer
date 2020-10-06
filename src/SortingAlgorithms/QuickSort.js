@@ -62,6 +62,8 @@ function QuickSort(arr, animations, left = 0, right = arr.length - 1) {
       if(i <= j) {
         [arr[i], arr[j]] = [arr[j], arr[i]]  // ES6 destructuring swap
         animations.push([1, i, arr[i]]);
+        animations.push([1, i, arr[i]]);
+        animations.push([1, j, arr[j]]);
         animations.push([1, j, arr[j]]);
         i++
         j--

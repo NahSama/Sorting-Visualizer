@@ -45,7 +45,7 @@ export default class Sortingvisualizer extends Component {
         for(let i = 0; i < this.state.inputQty; i++){
             array.push(randomIntFromInterval(5, 730));
         }
-        this.setState({array});
+        this.setState({array: array});
     }
 
     mergeSort(){
@@ -68,6 +68,10 @@ export default class Sortingvisualizer extends Component {
                     const [barOneIdx, newHeight] = animations[i];
                     const barOneStyle = arrayBars[barOneIdx].style;
                     barOneStyle.height = `${newHeight}px`;
+                    barOneStyle.backgroundColor = "black";
+                    setTimeout(() => {
+                        barOneStyle.backgroundColor = PRIMARY_COLOR;
+                    }, 100)
                 }, i*animationSpeedMs);
             }
         }
@@ -84,15 +88,18 @@ export default class Sortingvisualizer extends Component {
                 const barOneStyle = arrayBars[barOneIdx].style;
                 const barTwoStyle = arrayBars[barTwoIdx].style;
                 const color = i % 2 === 0 ? SECONDARY_COLOR : PRIMARY_COLOR;
+                const pivotColor = i % 2 === 0 ? "black" : PRIMARY_COLOR;
                 setTimeout(() => {
                     barOneStyle.backgroundColor = color;
-                    barTwoStyle.backgroundColor = color;
+                    barTwoStyle.backgroundColor = pivotColor;
                 }, i*animationSpeedMs);
             }else {
+                const color = i % 2 === 0 ? SECONDARY_COLOR : PRIMARY_COLOR;
                 setTimeout(() => {
                     const [action, barOneIdx, newHeight] = animations[i];
                     const barOneStyle = arrayBars[barOneIdx].style;
                     barOneStyle.height = `${newHeight}px`;
+                    barOneStyle.backgroundColor = color;
                 }, i*animationSpeedMs);
             }
             
@@ -129,6 +136,7 @@ export default class Sortingvisualizer extends Component {
 
     render() {
         const {array} = this.state
+        const width = Math.floor(800/array.length)
         return (
             <div>
                 <div className="navbar navbar-expand-lg navbar-light bg-light">
@@ -163,7 +171,7 @@ export default class Sortingvisualizer extends Component {
                         style={{
                             backgroundColor: PRIMARY_COLOR,
                             height: `${value}px`,
-                            width: `${Math.floor(800/array.length)}px`,
+                            width: `${width}px`,
                         }}></div>
                     ))}
                 </div>
